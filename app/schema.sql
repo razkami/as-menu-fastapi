@@ -1,0 +1,7 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY,email TEXT NOT NULL UNIQUE COLLATE NOCASE,password_hash TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN('user','admin')),created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS foods(id INTEGER PRIMARY KEY,name TEXT NOT NULL,category TEXT NOT NULL,description TEXT NOT NULL DEFAULT '',kcal_100 REAL NOT NULL CHECK(kcal_100>=0),protein_100 REAL NOT NULL CHECK(protein_100>=0),fat_100 REAL NOT NULL CHECK(fat_100>=0),carbs_100 REAL NOT NULL CHECK(carbs_100>=0),source_note TEXT NOT NULL,is_active INTEGER NOT NULL DEFAULT 1,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS ix_foods_category_active ON foods(category,is_active);
+CREATE TABLE IF NOT EXISTS menus(id INTEGER PRIMARY KEY,user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,menu_date TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL,UNIQUE(user_id,menu_date));
+CREATE TABLE IF NOT EXISTS menu_items(id INTEGER PRIMARY KEY,menu_id INTEGER NOT NULL REFERENCES menus(id) ON DELETE CASCADE,food_id INTEGER NOT NULL REFERENCES foods(id) ON DELETE RESTRICT,meal_type TEXT NOT NULL CHECK(meal_type IN('breakfast','lunch','snack','dinner')),grams REAL NOT NULL CHECK(grams>0 AND grams<=2000),snapshot_kcal_100 REAL NOT NULL,snapshot_protein_100 REAL NOT NULL,snapshot_fat_100 REAL NOT NULL,snapshot_carbs_100 REAL NOT NULL);
+
