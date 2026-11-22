@@ -34,9 +34,9 @@
 
 Клиент беті:
 
-![Клиент беті](docs/screenshots/client-homepage.png)
+![Клиент беті](docs/screenshots/client-homepage.jpg)
 
 Әкімші беті:
 
-![Әкімші беті](docs/screenshots/admin-dashboard.png)
+![Әкімші беті](docs/screenshots/admin-dashboard.jpg)
 
